@@ -1,0 +1,66 @@
+﻿@model FishingForum.Domain.Entities.Article
+
+<h2>@Model.Title</h2>
+
+<p><strong>Author:</strong> @(Model.User?.Username ?? "Unknown")</p>
+<p><strong>Creation date:</strong> @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+
+<p>@Model.Content</p>
+
+<hr />
+
+<h3>Комментарии</h3>
+
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    foreach (var comment in Model.Comments)
+    {
+        <div class="comment border p-2 mb-2">
+            <p><strong>Created by:</strong> @comment.User?.Username</p>
+            <p><strong>Created at:</strong> @comment.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+            <p>@comment.Content</p>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-sm btn-warning">Edit</a>
+                <a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-sm btn-danger">Delete</a>
+            }
+        </div>
+    }
+
+    @if (Model.Comments.Count > 5)
+    {
+        <button id="showMoreComments" class="btn btn-primary">Show more</button>
+    }
+}
+else
+{
+    <p>No comments yet.</p>
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <a asp-controller="Comments" asp-action="Create" asp-route-articleId="@Model.Id" class="btn btn-primary">Add comment</a>
+}
+
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let comments = document.querySelectorAll(".comment");
+        let showMoreBtn = document.getElementById("showMoreComments");
+
+        if (comments.length > 5) {
+            for (let i = 5; i < comments.length; i++) {
+                comments[i].style.display = "none";
+            }
+
+            showMoreBtn.style.display = "block";
+
+            showMoreBtn.addEventListener("click", function () {
+                comments.forEach(comment => comment.style.display = "block");
+                showMoreBtn.style.display = "none";
+            });
+        }
+    });
+</script>

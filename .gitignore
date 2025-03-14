@@ -1,0 +1,29 @@
+# Visual Studio & VS Code files
+.vs/
+.vscode/
+
+# Build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Temporary files
+*.log
+*.tmp
+*.cache
+
+# NuGet packages
+packages/
+
+# OS-specific files
+Thumbs.db
+.DS_Store
+
+# Environment variables and secrets
+.env
+secrets.json

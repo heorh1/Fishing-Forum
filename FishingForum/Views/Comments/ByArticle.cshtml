@@ -1,0 +1,28 @@
+﻿@model List<FishingForum.Domain.Entities.Comment>
+
+<h3>Comments</h3>
+
+@foreach (var comment in Model)
+{
+    <div class="comment-box">
+        <p><strong>Created by:</strong> @comment.User?.Username</p>
+        <p><strong>Created at:</strong> @comment.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+        <p>@comment.Content</p>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-sm btn-warning">Edit</a>
+            <a asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-sm btn-danger">Delete</a>
+        }
+    </div>
+}
+
+@if (ViewBag.HasMore)
+{
+    <a asp-action="ByArticle" asp-route-articleId="@ViewBag.ArticleId" asp-route-page="@ViewBag.NextPage" class="btn btn-primary">Show more</a>
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <a asp-action="Create" asp-route-articleId="@ViewBag.ArticleId" class="btn btn-success">Add comment</a>
+}

@@ -1,0 +1,15 @@
+﻿@model FishingForum.Domain.Entities.Comment
+
+<h2>Add Comment</h2>
+
+<form asp-action="Create">
+    <input type="hidden" asp-for="ArticleId" />
+
+    <div class="form-group">
+        <label>Comment:</label>
+        <textarea asp-for="Content" class="form-control" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-controller="Articles" asp-action="Details" asp-route-id="@Model.ArticleId" class="btn btn-secondary">Cancel</a>
+</form>

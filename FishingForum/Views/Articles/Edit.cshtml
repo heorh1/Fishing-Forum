@@ -1,0 +1,25 @@
+﻿@model FishingForum.Domain.Entities.Article
+
+<h2>Edit Article</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" class="form-control"></textarea>
+    </div>
+
+    <p><strong>Author:</strong> @Model.User?.Username</p>
+    <p><strong>Created At:</strong> @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<a asp-action="Index">Back to List</a>
+
